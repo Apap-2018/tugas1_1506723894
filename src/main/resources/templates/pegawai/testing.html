@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Testing</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<br>
+<form th:action="@{/pegawai/testing/tambah}" th:object="${pegawai}" method="POST">
+    <!--<input type="hidden" th:field="*{id}" />-->
+    <input type="hidden" th:field="*{instansi}" />
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+</body>
+</html>

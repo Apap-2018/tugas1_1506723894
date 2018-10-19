@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Update Pegawai</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="container-fluid">
+        <h3>Ubah Pegawai</h3>
+        <form th:action="@{/pegawai/ubah}" th:object="${pegawai}" method="POST">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{nip}">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Nama</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" th:field="*{nama}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Tempat Lahir</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" th:field="*{tempatLahir}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Tanggal Lahir</label>
+                <div class="col-sm-6">
+                    <input type="date" class="form-control" th:field="*{tanggalLahir}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Tahun Masuk</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" th:field="*{tahunMasuk}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="provinsiInstansiPegawai" class="col-sm-2 col-form-label">Provinsi</label>
+                <div class="col-sm-6">
+                    <select class="form-control" id="provinsiInstansiPegawai">
+                        <option value=null>Select Provinsi</option>
+                        <option th:each="provinsi : ${daftarProvinsi}"
+                                th:value="${provinsi.id}"
+                                th:text="${provinsi.nama}"
+                                th:selected="(${pegawai.instansi.provinsi.id} == ${provinsi.id})"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="instansiPegawai" class="col-sm-2 col-form-label">Instansi</label>
+                <div class="col-sm-6">
+                    <select class="form-control" id="instansiPegawai" name="instansi">
+                        <option value=null>Select Instansi</option>
+                        <option th:each="instansiOption : ${daftarInstansi}"
+                                th:value="${instansiOption.id}"
+                                th:text="${instansiOption.nama}"
+                                th:selected="(${instansiOption.id} == *{instansi.id})"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Jabatan</label>
+                <div class="col-sm-6" id="listJabatan">
+                    <select th:each="jabatanRel, iterStat : *{jabatanPegawai}" class="form-control" id="jabatanPegawai" th:name="'jabatanPegawai[' + ${iterStat.index} + '].jabatan'">
+                        <option value=null>Select Jabatan</option>
+                        <option th:each="jabatan : ${daftarJabatan}"
+                                th:value="${jabatan.id}"
+                                th:text="${jabatan.nama}"
+                                th:selected="(${jabatan.id} == ${jabatanRel.jabatan.id})"></option>
+                    </select>
+                </div>
+                <div>
+                    <a class="btn btn-primary" id="add-jabatan">+ Tambah Jabatan</a>
+                </div>
+            </div>
+
+            <br>
+            <br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+<script type="application/javascript" th:inline="javascript">
+    $(document).ready(function () {
+        var jabatanCount = 0;
+        var jumlahCurrentJabatan = /*[[${jumlahCurrentJabatan}]]*/ 'default';
+
+        $("#provinsiInstansiPegawai").change(function () {
+            var idProvinsi = $( "#provinsiInstansiPegawai" ).val();
+            // alert(idProvinsi);
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "http://localhost:8080/pegawai/tambah/select-provinsi/" + idProvinsi
+            }).done(function(data) {
+                $( "#instansiPegawai" ).empty();
+                $( "#instansiPegawai" ).append( '<option value=null>Select Instansi</option>' );
+                $.each( data, function( i, instansi ) {
+                    $( "#instansiPegawai" ).append('<option value=' + instansi.id + '>' + instansi.nama + '</option>');
+                });
+            });
+        })
+
+        $("#add-jabatan").click(function () {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "http://localhost:8080/pegawai/tambah/tambah-row-jabatan"
+            }).done(function(data) {
+                var selectHtml = '<select class="form-control" id="jabatanPegawai" name="jabatanPegawai['+ jumlahCurrentJabatan +'].jabatan">\n';
+
+                var optionsHtml = '<option value=null>Select Jabatan</option>';
+
+                $.each( data, function( i, jabatan ) {
+                    optionsHtml += '<option value=' + jabatan.id + '>' + jabatan.nama + '</option>';
+                });
+
+                var closingSelectHtml = '</select>';
+
+                $( "#listJabatan" ).append(selectHtml + optionsHtml + closingSelectHtml);
+                jumlahCurrentJabatan++;
+            });
+        })
+    })
+</script>
+</html>
