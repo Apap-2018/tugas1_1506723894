@@ -24,10 +24,12 @@ public class JabatanController {
     }
 
     @RequestMapping(value = "/jabatan/tambah", method = RequestMethod.POST)
-    private String addJabatanSubmit(@ModelAttribute JabatanModel jabatan){
+    private String addJabatanSubmit(@ModelAttribute JabatanModel jabatan, Model model){
         System.out.println(jabatan.getNama());
         jabatanService.addJabatan(jabatan);
-        return "jabatan/add";
+        model.addAttribute("jabatan", new JabatanModel());
+        model.addAttribute("successJabatan", jabatan);
+        return "jabatan/addJabatan";
     }
 
     @RequestMapping(value = "/jabatan/view", method = RequestMethod.GET)
@@ -45,19 +47,24 @@ public class JabatanController {
     }
 
     @RequestMapping(value = "/jabatan/ubah", method = RequestMethod.POST)
-    private String updateJabatanSubmit(@ModelAttribute JabatanModel jabatan){
+    private String updateJabatanSubmit(@ModelAttribute JabatanModel jabatan, Model model){
         jabatanService.updateJabatan(jabatan);
-        return "jabatan/update";
+        model.addAttribute("jabatan", jabatan);
+        model.addAttribute("successJabatan", jabatan);
+        return "jabatan/updateJabatan";
     }
 
     @RequestMapping(value = "/jabatan/hapus", method = RequestMethod.POST)
     private String delete(@RequestParam(value = "id_jabatan") int id_jabatan, Model model){
         JabatanModel jabatan = jabatanService.getJabatanById(id_jabatan);
-        if(jabatan.getJabatanPegawai().size() > 0){
+        System.out.println(jabatan.getJabatanPegawai().size());
+        if(jabatan.getJabatanPegawai().size() == 0){
             jabatanService.deleteJabatan(jabatan);
+            model.addAttribute("successJabatan", jabatan);
             return "jabatan/delete";
         }
         model.addAttribute("jabatan", jabatan);
+        model.addAttribute("failedJabatan", jabatan);
         return "jabatan/viewJabatan";
     }
 

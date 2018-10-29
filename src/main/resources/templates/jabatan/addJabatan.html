@@ -8,8 +8,13 @@
 
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
-
     <br>
+    <div class="container-fluid" th:if="${successJabatan != null}">
+        <div class="alert alert-success col-md-6 offset-3" role="alert">
+            <h3>Sukses</h3>
+            <p th:text="'Jabatan ' + ${successJabatan.nama} + ' berhasil ditambahkan'"></p>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="card col-md-6 offset-3">
             <div class="card-body">

@@ -89,6 +89,10 @@ public class PegawaiServiceCore implements PegawaiService{
     @Override
     public void updatePegawai(PegawaiModel pegawai) {
         PegawaiModel pegawaiData = getPegawaiById(pegawai.getId());
+        if(pegawaiData.getInstansi().getId() != pegawai.getInstansi().getId()){
+            pegawaiData.setNip(pegawai.getNip());
+        }
+        pegawaiData.setNama(pegawai.getNama());
         pegawaiData.setTempatLahir(pegawai.getTempatLahir());
         pegawaiData.setTanggalLahir(pegawai.getTanggalLahir());
         pegawaiData.setTahunMasuk(pegawai.getTahunMasuk());

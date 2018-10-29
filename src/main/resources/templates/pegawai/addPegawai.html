@@ -18,7 +18,7 @@
 
                     <div class="mb-3">
                         <label class="col-form-label">Nama</label>
-                        <input type="text" class="form-control" th:field="*{nama}">
+                        <input type="text" class="form-control" th:field="*{nama}" required>
                         <div class="invalid-feedback">
                             Mohon masukkan nama anda.
                         </div>
@@ -26,7 +26,7 @@
 
                     <div class="mb-3">
                         <label class="col-form-label">Tempat Lahir</label>
-                        <input type="text" class="form-control" th:field="*{tempatLahir}">
+                        <input type="text" class="form-control" th:field="*{tempatLahir}" required>
                         <div class="invalid-feedback">
                             Mohon masukkan tempat lahir anda.
                         </div>
@@ -34,7 +34,7 @@
 
                     <div class="mb-3">
                         <label class="col-form-label">Tanggal Lahir</label>
-                        <input type="date" class="form-control" th:field="*{tanggalLahir}">
+                        <input type="date" class="form-control" th:field="*{tanggalLahir}" required>
                         <div class="invalid-feedback">
                             Mohon masukkan tanggal lahir anda.
                         </div>
@@ -42,7 +42,7 @@
 
                     <div class="mb-3">
                         <label class="col-form-label">Tahun Masuk</label>
-                        <input type="text" class="form-control" th:field="*{tahunMasuk}">
+                        <input type="text" class="form-control" th:field="*{tahunMasuk}" required>
                         <div class="invalid-feedback">
                             Mohon masukkan tahun masuk anda.
                         </div>
@@ -50,8 +50,8 @@
 
                     <div class="mb-3">
                         <label class="col-form-label">Provinsi</label>
-                        <select class="form-control" id="provinsiInstansiPegawai">
-                            <option value=null>Select Provinsi</option>
+                        <select class="form-control" id="provinsiInstansiPegawai" required>
+                            <option value="">Select Provinsi</option>
                             <option th:each="provinsi : ${daftarProvinsi}"
                                     th:value="${provinsi.id}"
                                     th:text="${provinsi.nama}"></option>
@@ -63,8 +63,8 @@
 
                     <div class="mb-3">
                         <label class="col-form-label">Instansi</label>
-                        <select th:field="*{instansi}" class="form-control" id="instansiPegawai">
-                            <option value="null">Select Instansi</option>
+                        <select th:field="*{instansi}" class="form-control" id="instansiPegawai" required>
+                            <option value="">Select Instansi</option>
                         </select>
                         <div class="invalid-feedback">
                             Mohon pilih instansi anda.
@@ -74,8 +74,8 @@
                     <div class="mb-3">
                         <label for="jabatanPegawai" class="col-form-label">Jabatan</label>
                         <div id="listJabatan">
-                            <select class="form-control mb-3" id="jabatanPegawai" name="jabatanPegawai[0].jabatan">
-                                <option value=null>Select Jabatan</option>
+                            <select class="form-control mb-3" id="jabatanPegawai" name="jabatanPegawai[0].jabatan" required>
+                                <option value="">Select Jabatan</option>
                                 <option th:each="jabatan : ${daftarJabatan}"
                                         th:value="${jabatan.id}"
                                         th:text="${jabatan.nama}"></option>
@@ -106,7 +106,7 @@
                 url: "http://localhost:8080/pegawai/tambah/select-provinsi/" + idProvinsi
             }).done(function(data) {
                 $( "#instansiPegawai" ).empty();
-                $( "#instansiPegawai" ).append( '<option value=null>Select Instansi</option>' );
+                $( "#instansiPegawai" ).append( '<option value="">Select Instansi</option>' );
                 $.each( data, function( i, instansi ) {
                     $( "#instansiPegawai" ).append('<option value=' + instansi.id + '>' + instansi.nama + '</option>');
                 });
@@ -120,9 +120,9 @@
                 url: "http://localhost:8080/pegawai/tambah/tambah-row-jabatan"
             }).done(function(data) {
                 jabatanCount++;
-                var selectHtml = '<select class="form-control mb-3" id="jabatanPegawai" name="jabatanPegawai['+ jabatanCount +'].jabatan">\n';
+                var selectHtml = '<select class="form-control mb-3" id="jabatanPegawai" name="jabatanPegawai['+ jabatanCount +'].jabatan" required>\n';
 
-                var optionsHtml = '<option value=null>Select Jabatan</option>';
+                var optionsHtml = '<option value="">Select Jabatan</option>';
 
                 $.each( data, function( i, jabatan ) {
                     optionsHtml += '<option value=' + jabatan.id + '>' + jabatan.nama + '</option>';

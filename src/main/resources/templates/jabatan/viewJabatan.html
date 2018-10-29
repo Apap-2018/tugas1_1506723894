@@ -9,6 +9,12 @@
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
     <br>
+    <div class="container-fluid" th:if="${failedJabatan != null}">
+        <div class="alert alert-danger col-md-6 offset-3" role="alert">
+            <h3>Sukses</h3>
+            <p th:text="'Gagal menghapus jabatan ' + ${failedJabatan.nama} + ' karena masih terikat dengan data pegawai'"></p>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="card col-md-6 offset-3">
             <div class="card-body">

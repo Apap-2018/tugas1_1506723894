@@ -52,7 +52,7 @@ public class PegawaiController {
     }
 
     @RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST)
-    private String addPegawaiSubmit(@ModelAttribute PegawaiModel pegawai){
+    private String addPegawaiSubmit(@ModelAttribute PegawaiModel pegawai, Model model){
         String nip = pegawaiService.generateNip(pegawai);
         pegawai.setNip(nip);
         for (JabatanPegawaiModel jabatan : pegawai.getJabatanPegawai()){
@@ -63,6 +63,7 @@ public class PegawaiController {
             System.out.println(jabatan.getPegawai().getNama());
         }
         pegawaiService.addPegawai(pegawai);
+        model.addAttribute("pegawai", pegawai);
         return "pegawai/add";
     }
 
@@ -111,13 +112,14 @@ public class PegawaiController {
     }
 
     @RequestMapping(value = "/pegawai/ubah", method = RequestMethod.POST)
-    private String updatePegawaiSubmit(@ModelAttribute PegawaiModel pegawai){
+    private String updatePegawaiSubmit(@ModelAttribute PegawaiModel pegawai, Model model){
         String newNip = pegawaiService.generateNip(pegawai);
         pegawai.setNip(newNip);
         for (JabatanPegawaiModel jabatan : pegawai.getJabatanPegawai()){
             jabatan.setPegawai(pegawai);
         }
         pegawaiService.updatePegawai(pegawai);
+        model.addAttribute("pegawai", pegawai);
         return "pegawai/update";
     }
 
