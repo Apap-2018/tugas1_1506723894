@@ -3,80 +3,81 @@
 
 <head>
     <title>Cari Pegawai</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/r-2.2.2/rg-1.1.0/datatables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/r-2.2.2/rg-1.1.0/datatables.min.js"></script>
+    <object th:include="fragments/fragment :: header" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: data-table" th:remove="tag"></object>
 
 </head>
 
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
+    <br>
     <div class="container-fluid">
-        <h3>Cari Pegawai</h3>
-        <form th:action="@{/pegawai/cari}">
+        <div class="card col-md-10 offset-1">
+            <div class="card-body">
+                <h3>Cari Pegawai</h3>
+                <hr>
+                <form class="row" th:action="@{/pegawai/cari}">
 
-            <div class="form-group row">
-                <label for="provinsiInstansiPegawai" class="col-sm-2 col-form-label">Provinsi</label>
-                <div class="col-sm-6">
-                    <select name="id_provinsi" class="form-control" id="provinsiInstansiPegawai">
-                        <option th:value="null">Select Provinsi</option>
-                        <option th:each="provinsi : ${daftarProvinsi}"
-                                th:value="${provinsi.id}"
-                                th:text="${provinsi.nama}"></option>
-                    </select>
-                </div>
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label">Provinsi</label>
+                        <select name="id_provinsi" class="form-control" id="provinsiInstansiPegawai">
+                            <option th:value="null">Select Provinsi</option>
+                            <option th:each="provinsi : ${daftarProvinsi}"
+                                    th:value="${provinsi.id}"
+                                    th:text="${provinsi.nama}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label">Instansi</label>
+                        <div id="instansiSelection">
+                            <select name="id_instansi" class="form-control" disabled>
+                                <option th:value="null">Select Instansi</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label">Jabatan</label>
+                        <select name="id_jabatan" class="form-control" id="jabatanPegawai">
+                            <option th:value="null">Select Jabatan</option>
+                            <option th:each="jabatan : ${daftarJabatan}"
+                                    th:value="${jabatan.id}"
+                                    th:text="${jabatan.nama}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> Cari</button>
+                    </div>
+                </form>
+                <br>
+
+                <table id="table_id" class="display">
+                    <thead>
+                        <th>NIP</th>
+                        <th>Nama</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Tahun Masuk</th>
+                        <th>Nama Instansi</th>
+                        <th>Jabatan</th>
+                    </thead>
+                    <tr th:each="pegawai : ${daftarPegawai}">
+                        <td><a th:href="@{/pegawai} + '?nip=' + ${pegawai.nip}" th:text="${pegawai.nip}"></a></td>
+                        <td th:text="${pegawai.nama}"></td>
+                        <td th:text="${pegawai.tempatLahir}"></td>
+                        <td th:text="${pegawai.tanggalLahir}"></td>
+                        <td th:text="${pegawai.tahunMasuk}"></td>
+                        <td th:text="${pegawai.instansi.nama}"></td>
+                        <td>
+                            <ul>
+                                <li th:each="jabatanRel : ${pegawai.jabatanPegawai}" th:text="${jabatanRel.jabatan.nama}"></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
             </div>
-
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Instansi</label>
-                <div class="col-sm-6" id="instansiSelection">
-                    <select class="form-control" disabled>
-                        <option th:value="null">Select Provinsi</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="jabatanPegawai" class="col-sm-2 col-form-label">Jabatan</label>
-                <div class="col-sm-6">
-                    <select name="id_jabatan" class="form-control" id="jabatanPegawai">
-                        <option th:value="null">Select Jabatan</option>
-                        <option th:each="jabatan : ${daftarJabatan}"
-                                th:value="${jabatan.id}"
-                                th:text="${jabatan.nama}"></option>
-                    </select>
-                </div>
-            </div>
-            <button class="btn btn-primary" type="submit">Cari</button>
-        </form>
-        <br>
-
-        <table id="table_id" class="display">
-            <thead>
-                <th>NIP</th>
-                <th>Nama</th>
-                <th>Tempat Lahir</th>
-                <th>Tanggal Lahir</th>
-                <th>Tahun Masuk</th>
-                <th>Nama Instansi</th>
-                <th>Jabatan</th>
-            </thead>
-            <tr th:each="pegawai : ${daftarPegawai}">
-                <td th:text="${pegawai.nip}"></td>
-                <td th:text="${pegawai.nama}"></td>
-                <td th:text="${pegawai.tempatLahir}"></td>
-                <td th:text="${pegawai.tanggalLahir}"></td>
-                <td th:text="${pegawai.tahunMasuk}"></td>
-                <td th:text="${pegawai.instansi.nama}"></td>
-                <td>
-                    <ul>
-                        <li th:each="jabatanRel : ${pegawai.jabatanPegawai}" th:text="${jabatanRel.jabatan.nama}"></li>
-                    </ul>
-                </td>
-            </tr>
-        </table>
+        </div>
     </div>
 </body>
 <script type="application/javascript">
@@ -93,7 +94,7 @@
             }).done(function(data) {
                 $( "#instansiSelection" ).empty();
                 var html = '<select name="id_instansi" class="form-control" id="instansiPegawai">\n' +
-                                            '<option th:value="null">Select Instansi</option>\n';
+                                            '<option value>Select Instansi</option>\n';
                 $.each( data, function( i, instansi ) {
                     html += '<option value=' + instansi.id + '>' + instansi.nama + '</option>';
                 });

@@ -36,6 +36,8 @@ public class JabatanServiceCore implements JabatanService{
 
     @Override
     public void updateJabatan(JabatanModel jabatan){
+//        System.out.println(jabatanDb.allJabatan().get(0).getNama());
+//        System.out.println(jabatanDb.allJabatan().get(0).getId());
         JabatanModel jabatanCurrent = this.getJabatanById(jabatan.getId());
         jabatanCurrent.setNama(jabatan.getNama());
         jabatanCurrent.setDeskripsi(jabatan.getDeskripsi());

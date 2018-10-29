@@ -4,6 +4,7 @@ import com.apap.tugas1.model.InstansiModel;
 import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.model.JabatanPegawaiModel;
 import com.apap.tugas1.model.PegawaiModel;
+import com.apap.tugas1.repository.InstansiDb;
 import com.apap.tugas1.repository.JabatanPegawaiDb;
 import com.apap.tugas1.repository.PegawaiDb;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class PegawaiServiceCore implements PegawaiService{
 
     @Autowired
     private JabatanPegawaiDb jabatanPegawaiDb;
+
+    @Autowired
+    private InstansiDb instansiDb;
 
     @Override
     public void addPegawai(PegawaiModel pegawai){
@@ -111,9 +115,10 @@ public class PegawaiServiceCore implements PegawaiService{
 
         String strTahunMasuk = pegawai.getTahunMasuk();
 
-        List<PegawaiModel> allPegawai = pegawaiDb.findAll();
+        InstansiModel instansi = instansiDb.findById(pegawai.getInstansi().getId());
+        List<PegawaiModel> allInsPegawai = pegawaiDb.findAllByInstansi(instansi);
         int count = 1;
-        for (PegawaiModel iterPegawai : allPegawai){
+        for (PegawaiModel iterPegawai : allInsPegawai){
             String formatTanggalLahirIter = df.format(iterPegawai.getTanggalLahir());
             String[] komponenTanggalLahirIter = formatTanggalLahirIter.split("/");
             String strTanggalLahirIter = komponenTanggalLahirIter[0] + komponenTanggalLahirIter[1] + komponenTanggalLahirIter[2];

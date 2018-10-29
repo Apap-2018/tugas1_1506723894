@@ -3,57 +3,60 @@
 
 <head>
     <title>View Pegawai</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: header" th:remove="tag"></object>
 </head>
 
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
+    <br>
     <div class="container-fluid">
-        <h2>Detail Pegawai</h2>
-        <table class="table col-md-4">
-            <tr>
-                <td>NIP:</td>
-                <td th:text="${pegawai.nip}"></td>
-            </tr>
-            <tr>
-                <td>Nama:</td>
-                <td th:text="${pegawai.nama}"></td>
-            </tr>
-            <tr>
-                <td>Tempat Lahir:</td>
-                <td th:text="${pegawai.tempatLahir}"></td>
-            </tr>
-            <tr>
-                <td>Tanggal Lahir:</td>
-                <td th:text="${pegawai.tanggalLahir}"></td>
-            </tr>
-            <tr>
-                <td>Tahun Masuk:</td>
-                <td th:text="${pegawai.tahunMasuk}"></td>
-            </tr>
-            <tr>
-                <td>Instansi:</td>
-                <td th:text="${pegawai.instansi.nama} + ' - '+ ${pegawai.instansi.provinsi.nama}"></td>
-            </tr>
-            <tr>
-                <td>Jabatan:</td>
-                <td>
-                    <ul>
-                        <li th:each="jabatanRel : ${pegawai.jabatanPegawai}" th:text="${jabatanRel.jabatan.nama}"></li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td>Gaji Pokok:</td>
-                <td th:text="${maxGaji}"></td>
-            </tr>
-        </table>
-        <br>
-        <form th:action="@{/pegawai/ubah}">
-            <input type="hidden" name="nip" th:value="${pegawai.nip}" />
-            <button class="btn btn-primary" type="submit">Ubah Data Pegawai</button>
-        </form>
+        <div class="card col-md-6 offset-3">
+            <div class="card-body">
+                <h2>Detail Pegawai</h2>
+                <table class="table">
+                    <tr>
+                        <td>NIP:</td>
+                        <td th:text="${pegawai.nip}"></td>
+                    </tr>
+                    <tr>
+                        <td>Nama:</td>
+                        <td th:text="${pegawai.nama}"></td>
+                    </tr>
+                    <tr>
+                        <td>Tempat Lahir:</td>
+                        <td th:text="${pegawai.tempatLahir}"></td>
+                    </tr>
+                    <tr>
+                        <td>Tanggal Lahir:</td>
+                        <td th:text="${pegawai.tanggalLahir}"></td>
+                    </tr>
+                    <tr>
+                        <td>Tahun Masuk:</td>
+                        <td th:text="${pegawai.tahunMasuk}"></td>
+                    </tr>
+                    <tr>
+                        <td>Instansi:</td>
+                        <td th:text="${pegawai.instansi.nama} + ' - '+ ${pegawai.instansi.provinsi.nama}"></td>
+                    </tr>
+                    <tr>
+                        <td>Jabatan:</td>
+                        <td>
+                            <ul>
+                                <li th:each="jabatanRel : ${pegawai.jabatanPegawai}" th:text="${jabatanRel.jabatan.nama}"></li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Gaji Pokok:</td>
+                        <td th:text="${maxGaji}"></td>
+                    </tr>
+                </table>
+                <form th:action="@{/pegawai/ubah}">
+                    <input type="hidden" name="nip" th:value="${pegawai.nip}" />
+                    <button class="btn btn-primary" type="submit">Ubah Data Pegawai</button>
+                </form>
+            </div>
+        </div>
     </div>
 
 </body>

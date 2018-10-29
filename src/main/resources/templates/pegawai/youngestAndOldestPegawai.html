@@ -3,87 +3,93 @@
 
 <head>
     <title>Youngest and Oldest Pegawai</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: header" th:remove="tag"></object>
 </head>
 
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
-    <div class="container-fluid row">
-        <div class="col-md-6">
-            <h2>Detail Pegawai Termuda</h2>
-            <table class="table">
-                <tr>
-                    <td>NIP:</td>
-                    <td th:text="${pegawaiTermuda.nip}"></td>
-                </tr>
-                <tr>
-                    <td>Nama:</td>
-                    <td th:text="${pegawaiTermuda.nama}"></td>
-                </tr>
-                <tr>
-                    <td>Tanggal Lahir:</td>
-                    <td th:text="${pegawaiTermuda.tempatLahir}"></td>
-                </tr>
-                <tr>
-                    <td>Tahun Masuk:</td>
-                    <td th:text="${pegawaiTermuda.tanggalLahir}"></td>
-                </tr>
-                <tr>
-                    <td>Tahun Masuk:</td>
-                    <td th:text="${pegawaiTermuda.tahunMasuk}"></td>
-                </tr>
-                <tr>
-                    <td>Nama Instansi:</td>
-                    <td th:text="${pegawaiTermuda.instansi.nama} + ' - '+ ${pegawaiTermuda.instansi.provinsi.nama}"></td>
-                </tr>
-                <tr>
-                    <td>Jabatan:</td>
-                    <td>
-                        <ul>
-                            <li th:each="jabatanRel : ${pegawaiTermuda.jabatanPegawai}" th:text="${jabatanRel.jabatan.nama}"></li>
-                        </ul>
-                    </td>
-                </tr>
-            </table>
-        </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="card col-md-6">
+                <div class="card-body">
+                    <h2>Detail Pegawai Termuda</h2>
+                    <table class="table">
+                        <tr>
+                            <td>NIP:</td>
+                            <td th:text="${pegawaiTermuda.nip}"></td>
+                        </tr>
+                        <tr>
+                            <td>Nama:</td>
+                            <td th:text="${pegawaiTermuda.nama}"></td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Lahir:</td>
+                            <td th:text="${pegawaiTermuda.tempatLahir}"></td>
+                        </tr>
+                        <tr>
+                            <td>Tahun Masuk:</td>
+                            <td th:text="${pegawaiTermuda.tanggalLahir}"></td>
+                        </tr>
+                        <tr>
+                            <td>Tahun Masuk:</td>
+                            <td th:text="${pegawaiTermuda.tahunMasuk}"></td>
+                        </tr>
+                        <tr>
+                            <td>Nama Instansi:</td>
+                            <td th:text="${pegawaiTermuda.instansi.nama} + ' - '+ ${pegawaiTermuda.instansi.provinsi.nama}"></td>
+                        </tr>
+                        <tr>
+                            <td>Jabatan:</td>
+                            <td>
+                                <ul>
+                                    <li th:each="jabatanRel : ${pegawaiTermuda.jabatanPegawai}" th:text="${jabatanRel.jabatan.nama}"></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
-        <div class="col-md-6">
-            <h2>Detail Pegawai Tertua</h2>
-            <table class="table">
-                <tr>
-                    <td>NIP:</td>
-                    <td th:text="${pegawaiTertua.nip}"></td>
-                </tr>
-                <tr>
-                    <td>Nama:</td>
-                    <td th:text="${pegawaiTertua.nama}"></td>
-                </tr>
-                <tr>
-                    <td>Tanggal Lahir:</td>
-                    <td th:text="${pegawaiTertua.tempatLahir}"></td>
-                </tr>
-                <tr>
-                    <td>Tahun Masuk:</td>
-                    <td th:text="${pegawaiTertua.tanggalLahir}"></td>
-                </tr>
-                <tr>
-                    <td>Tahun Masuk:</td>
-                    <td th:text="${pegawaiTertua.tahunMasuk}"></td>
-                </tr>
-                <tr>
-                    <td>Nama Instansi:</td>
-                    <td th:text="${pegawaiTertua.instansi.nama} + ' - '+ ${pegawaiTertua.instansi.provinsi.nama}"></td>
-                </tr>
-                <tr>
-                    <td>Jabatan:</td>
-                    <td>
-                        <ul>
-                            <li th:each="jabatanRel : ${pegawaiTertua.jabatanPegawai}" th:text="${jabatanRel.jabatan.nama}"></li>
-                        </ul>
-                    </td>
-                </tr>
-            </table>
+            <div class="card col-md-6">
+                <div class="card-body">
+                    <h2>Detail Pegawai Tertua</h2>
+                    <table class="table">
+                        <tr>
+                            <td>NIP:</td>
+                            <td th:text="${pegawaiTertua.nip}"></td>
+                        </tr>
+                        <tr>
+                            <td>Nama:</td>
+                            <td th:text="${pegawaiTertua.nama}"></td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Lahir:</td>
+                            <td th:text="${pegawaiTertua.tempatLahir}"></td>
+                        </tr>
+                        <tr>
+                            <td>Tahun Masuk:</td>
+                            <td th:text="${pegawaiTertua.tanggalLahir}"></td>
+                        </tr>
+                        <tr>
+                            <td>Tahun Masuk:</td>
+                            <td th:text="${pegawaiTertua.tahunMasuk}"></td>
+                        </tr>
+                        <tr>
+                            <td>Nama Instansi:</td>
+                            <td th:text="${pegawaiTertua.instansi.nama} + ' - '+ ${pegawaiTertua.instansi.provinsi.nama}"></td>
+                        </tr>
+                        <tr>
+                            <td>Jabatan:</td>
+                            <td>
+                                <ul>
+                                    <li th:each="jabatanRel : ${pegawaiTertua.jabatanPegawai}" th:text="${jabatanRel.jabatan.nama}"></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </body>

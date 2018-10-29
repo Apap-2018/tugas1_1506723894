@@ -3,8 +3,7 @@
 
 <head>
     <title>Update Pegawai</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: header" th:remove="tag"></object>
 </head>
 
 <body>
@@ -12,27 +11,32 @@
     <nav th:replace="fragments/fragment :: navbar"></nav>
     <br>
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-header">Ubah Jabatan</div>
+        <div class="card col-md-6 offset-3">
             <div class="card-body">
-                <form th:action="@{/jabatan/update}" th:object="${jabatan}" method="POST">
+                <h3>Ubah Jabatan</h3>
+                <form th:action="@{/jabatan/ubah}" th:object="${jabatan}" method="POST">
                     <input type="hidden" th:field="*{id}" />
-                    <div class="form-group row">
-                        <label for="namaJabatan" class="col-sm-2 col-form-label">Nama</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="namaJabatan" th:field="*{nama}">
+
+                    <div class="mb-3">
+                        <label class="col-form-label">Nama</label>
+                        <input type="text" class="form-control" id="namaJabatan" th:field="*{nama}" required>
+                        <div class="invalid-feedback">
+                            Mohon masukkan nama jabatan.
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="deskripsiJabatan" class="col-sm-2 col-form-label">Deskripsi</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="deskripsiJabatan" th:field="*{deskripsi}">
+
+                    <div class="mb-3">
+                        <label class="col-form-label">Deskripsi</label>
+                        <input type="text" class="form-control" id="deskripsiJabatan" th:field="*{deskripsi}">
+                        <div class="invalid-feedback">
+                            Mohon masukkan deskripsi jabatan.
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="gajiPokokJabatan" class="col-sm-2 col-form-label">Gaji Pokok</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="gajiPokokJabatan" th:field="*{gajiPokok}">
+                    <div class="mb-3">
+                        <label class="col-form-label">Gaji Pokok</label>
+                        <input type="text" class="form-control" id="gajiPokokJabatan" th:field="*{gajiPokok}" required>
+                        <div class="invalid-feedback">
+                            Mohon masukkan gaji pokok jabatan.
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit">Submit</button>

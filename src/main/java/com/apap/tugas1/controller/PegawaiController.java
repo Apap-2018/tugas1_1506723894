@@ -1,17 +1,13 @@
 package com.apap.tugas1.controller;
 
 import com.apap.tugas1.model.*;
-import com.apap.tugas1.repository.JabatanPegawaiDb;
 import com.apap.tugas1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -49,8 +45,6 @@ public class PegawaiController {
         List<JabatanPegawaiModel> listNewJabatan = new ArrayList<>();
         listNewJabatan.add(new JabatanPegawaiModel());
         pegawai.setJabatanPegawai(listNewJabatan);
-//        pegawai.setInstansi(instansiService.getInstansiById(1101));
-//        System.out.println(pegawai.getInstansi().getNama());
         model.addAttribute("daftarProvinsi", daftarProvinsi);
         model.addAttribute("pegawai",pegawai);
         model.addAttribute("daftarJabatan", daftarJabatan);
@@ -61,11 +55,6 @@ public class PegawaiController {
     private String addPegawaiSubmit(@ModelAttribute PegawaiModel pegawai){
         String nip = pegawaiService.generateNip(pegawai);
         pegawai.setNip(nip);
-//        System.out.println(pegawai.getNip());
-//        System.out.println(pegawai.getInstansi().getNama());
-//        System.out.println(pegawai.getTempatLahir());
-//        System.out.println(pegawai.getTanggalLahir());
-//        System.out.println(pegawai.getTahunMasuk());
         for (JabatanPegawaiModel jabatan : pegawai.getJabatanPegawai()){
             jabatan.setPegawai(pegawai);
             System.out.println(jabatan.getJabatan().getId());
@@ -74,23 +63,8 @@ public class PegawaiController {
             System.out.println(jabatan.getPegawai().getNama());
         }
         pegawaiService.addPegawai(pegawai);
-//        PegawaiModel newPegawai = pegawaiService.getPegawaiByNip(pegawai.getNip());
-//        for (JabatanPegawaiModel jpModel : newPegawai.getJabatanPegawai()){
-//            jabatanPegawaiService.addJabatanPegawaiRel(jpModel);
-//        }
         return "pegawai/add";
     }
-
-//    @RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST)
-//    private String addJabatanRow(@ModelAttribute PegawaiModel pegawai,
-//                                    @RequestParam("id_instansi") int id_instansi){
-//
-//        InstansiModel instansi = instansiService.getInstansiById(id_instansi);
-//        pegawai.setInstansi(instansi);
-//        System.out.println(pegawai.getInstansi().getNama());
-//
-//        return "pegawai/addPegawai";
-//    }
 
     @RequestMapping(value = "/pegawai", method = RequestMethod.GET)
     private String viewPegawaiDetail(@RequestParam("nip") String nip, Model model){
@@ -103,9 +77,9 @@ public class PegawaiController {
                 maxGaji = jabatanRel.getJabatan().getGajiPokok();
             }
         }
-        maxGaji = maxGaji + (maxGaji * presentaseTunjangan);
+        System.out.println(maxGaji);
+        maxGaji = maxGaji + (maxGaji * presentaseTunjangan / 100);
         model.addAttribute("pegawai", pegawai);
-//        model.addAttribute("daftarJabatanRel", daftarJabatanRel);
         model.addAttribute("maxGaji", maxGaji);
 
         return "pegawai/viewPegawai";

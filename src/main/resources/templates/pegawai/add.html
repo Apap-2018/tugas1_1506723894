@@ -3,13 +3,16 @@
 
 <head>
     <title>Add</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: header" th:remove="tag"></object>
 </head>
 
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
     <br>
-    <h2>Data Berhasil Ditambahkan</h2>
+    <div class="container-fluid">
+        <div class="alert alert-success col-md-6" role="alert">
+            Data pegawai berhasil ditambahkan
+        </div>
+    </div>
 </body>
 </html>

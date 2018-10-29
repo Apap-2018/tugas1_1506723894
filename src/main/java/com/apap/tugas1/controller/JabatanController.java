@@ -17,13 +17,13 @@ public class JabatanController {
     @Autowired
     private JabatanService jabatanService;
 
-    @RequestMapping(value = "/jabatan/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/jabatan/tambah", method = RequestMethod.GET)
     private String add(Model model){
         model.addAttribute("jabatan", new JabatanModel());
         return "jabatan/addJabatan";
     }
 
-    @RequestMapping(value = "/jabatan/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/jabatan/tambah", method = RequestMethod.POST)
     private String addJabatanSubmit(@ModelAttribute JabatanModel jabatan){
         System.out.println(jabatan.getNama());
         jabatanService.addJabatan(jabatan);
@@ -44,7 +44,7 @@ public class JabatanController {
         return "jabatan/updateJabatan";
     }
 
-    @RequestMapping(value = "/jabatan/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/jabatan/ubah", method = RequestMethod.POST)
     private String updateJabatanSubmit(@ModelAttribute JabatanModel jabatan){
         jabatanService.updateJabatan(jabatan);
         return "jabatan/update";
@@ -53,8 +53,12 @@ public class JabatanController {
     @RequestMapping(value = "/jabatan/hapus", method = RequestMethod.POST)
     private String delete(@RequestParam(value = "id_jabatan") int id_jabatan, Model model){
         JabatanModel jabatan = jabatanService.getJabatanById(id_jabatan);
-        jabatanService.deleteJabatan(jabatan);
-        return "jabatan/delete";
+        if(jabatan.getJabatanPegawai().size() > 0){
+            jabatanService.deleteJabatan(jabatan);
+            return "jabatan/delete";
+        }
+        model.addAttribute("jabatan", jabatan);
+        return "jabatan/viewJabatan";
     }
 
     @RequestMapping(value = "/jabatan/viewall", method = RequestMethod.GET)
